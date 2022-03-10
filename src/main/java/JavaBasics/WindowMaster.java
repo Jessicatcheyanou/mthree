@@ -107,7 +107,5 @@ public class WindowMaster {
         System.out.println("Total Cost of Window :" + totalCostOfWindow + "$");
         System.out.println("Total Cost of Renovation:" + totalCostOfRenovation + "$" );
 
-
-
     }
 }
