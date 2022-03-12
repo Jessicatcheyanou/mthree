@@ -7,7 +7,7 @@ import java.util.List;
 
 public class DVDCollectionView {
 
-    private UserIO io;
+    private final UserIO io;
 
     public DVDCollectionView(UserIO io) {
         this.io = io;
@@ -85,7 +85,7 @@ public class DVDCollectionView {
             io.print(dvd.getStudio().getName() + " " + dvd.getStudio().getCompleteAddress()
             +" " + dvd.getStudio().getEmail() + " " + dvd.getStudio().getContactNo());
         } else {
-            io.print("No sUch DVD");
+            io.print("No such DVD");
         }
         io.readString("Please Hit Enter to continue");
     }
@@ -109,6 +109,12 @@ public class DVDCollectionView {
 
     public void displayUnknownCommandBanner(){
         io.print("Unknown Command");
+
+    }
+
+    public void displayErrorMessage(String errorMsg){
+        io.print("===ERROR===");
+        io.print(errorMsg);
     }
 
 }

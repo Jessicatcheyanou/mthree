@@ -9,6 +9,13 @@ public class Studio {
     public Studio() {
     }
 
+    public Studio(String name, String contactNo, String email, String completeAddress) {
+        this.name = name;
+        this.contactNo = contactNo;
+        this.email = email;
+        this.completeAddress = completeAddress;
+    }
+
     //GETTER METHODS
     public String getName() {
         return name;

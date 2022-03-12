@@ -1,9 +1,11 @@
 package SummativeAssessment.DVDCollection.controller;
 
+import SummativeAssessment.DVDCollection.dao.DVDCollectionDaoException;
 import SummativeAssessment.DVDCollection.dao.DvdCollectionDao;
 import SummativeAssessment.DVDCollection.dto.DVD;
 import SummativeAssessment.DVDCollection.ui.*;
 
+import java.text.ParseException;
 import java.util.List;
 
 public class DVDCollectionController {
@@ -16,32 +18,38 @@ public class DVDCollectionController {
         this.view = view;
     }
 
-    public void run(){
+    public void run() throws ParseException{
         boolean keepGoing = true;
         int menuSelection = 0;
-        while (keepGoing) {
 
-            menuSelection = getMenuSelection();
+        try {
+            while (keepGoing) {
 
-            switch (menuSelection) {
-                case 1 -> listDVDs();
-                case 2 -> createDVD();
-                case 3 -> viewDVD();
-                case 4 -> removeDVD();
-                //case 5 -> io.print("EDIT DVD");
-                case 6 -> keepGoing = false;
-                default -> unknownCommand();
+                menuSelection = getMenuSelection();
+
+                switch (menuSelection) {
+                    case 1 -> listDVDs();
+                    case 2 -> createDVD();
+                    case 3 -> viewDVD();
+                    case 4 -> removeDVD();
+                    //case 5 -> io.print("EDIT DVD");
+                    case 6 -> keepGoing = false;
+                    default -> unknownCommand();
+                }
+
             }
-
+            exitMessage();
+        }catch (DVDCollectionDaoException e){
+            view.displayErrorMessage(e.getMessage());
         }
-        exitMessage();
+
 
     }
 
     private int getMenuSelection(){
         return view.printMenuAndGetSelection();
     }
-    private void createDVD(){
+    private void createDVD() throws ParseException, DVDCollectionDaoException {
         view.displayCreateDVDBanner();
         DVD newDVD = view.getNewDVDInfo();
         dao.addDVD(newDVD);
@@ -49,7 +57,7 @@ public class DVDCollectionController {
 
     }
 
-    private void listDVDs(){
+    private void listDVDs() throws ParseException, DVDCollectionDaoException {
         view.displayAllDVDsBanner();
         List<DVD> dvdList = dao.getAllDVDs();
         view.displayDVDList(dvdList);
@@ -62,7 +70,7 @@ public class DVDCollectionController {
         view.displayDVD(dvd);
     }
 
-    private void removeDVD(){
+    private void removeDVD() throws DVDCollectionDaoException, ParseException {
         view.displayRemoveDVDBanner();
         String dvdTitle = view.getDVDTitleChoice();
         DVD removedDVD = dao.removeDVD(dvdTitle);
