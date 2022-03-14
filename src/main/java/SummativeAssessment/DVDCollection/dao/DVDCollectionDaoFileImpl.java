@@ -49,7 +49,10 @@ public class DVDCollectionDaoFileImpl implements DvdCollectionDao{
 
     @Override
     public DVD getDVD(String title) {
-        return dvds.get(title);
+        if (dvds.containsKey(title)){
+            return dvds.get(title);
+        }
+       return null;
     }
 
     @Override
