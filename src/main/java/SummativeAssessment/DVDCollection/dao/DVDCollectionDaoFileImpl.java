@@ -23,14 +23,21 @@ public class DVDCollectionDaoFileImpl implements DvdCollectionDao{
     }
 
     @Override
-    public DVD updateDVD(String title,DVD newDVD) {
-        DVD dvdToUpdate = getDVD(title);
-        dvdToUpdate.setTitle(newDVD.getTitle());
-        dvdToUpdate.setDirectorName(newDVD.getDirectorName());
-        dvdToUpdate.setMpaaRating(newDVD.getMpaaRating());
-        dvdToUpdate.setReleaseDate(newDVD.getReleaseDate());
-        dvdToUpdate.setStudio(newDVD.getStudio());
-        dvdToUpdate.setUserRating(newDVD.getUserRating());
+    public DVD updateDVD(DVD updateDVD,String title) throws ParseException, DVDCollectionDaoException {
+        loadDVDCollection();
+        DVD dvdToUpdate = new DVD();
+        if (dvds.containsKey(title)){
+            dvdToUpdate = dvds.get(title);
+
+            dvdToUpdate.setDirectorName(updateDVD.getDirectorName());
+            dvdToUpdate.setMpaaRating(updateDVD.getMpaaRating());
+            dvdToUpdate.setReleaseDate(updateDVD.getReleaseDate());
+            dvdToUpdate.setStudio(updateDVD.getStudio());
+            dvdToUpdate.setUserRating(updateDVD.getUserRating());
+        }
+        dvds.put(dvdToUpdate.getTitle(),dvdToUpdate);
+        writeDVDCollection();
+
         return dvdToUpdate;
     }
 

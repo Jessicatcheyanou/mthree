@@ -32,7 +32,7 @@ public class DVDCollectionController {
                     case 2 -> createDVD();
                     case 3 -> viewDVD();
                     case 4 -> removeDVD();
-                    //case 5 -> io.print("EDIT DVD");
+                    case 5 -> updateDVD();
                     case 6 -> keepGoing = false;
                     default -> unknownCommand();
                 }
@@ -54,6 +54,15 @@ public class DVDCollectionController {
         DVD newDVD = view.getNewDVDInfo();
         dao.addDVD(newDVD);
         view.displayCreateSuccessBanner();
+
+    }
+
+    private void updateDVD() throws ParseException,DVDCollectionDaoException{
+        view.displayUpdateDVDBanner();
+        String updateDVDTitle = view.getDVDTitleChoice();
+        DVD updateDVD = view.getUpdateDVDInfo();
+        dao.updateDVD(updateDVD,updateDVDTitle);
+        view.displayUpdateSuccessBanner();
 
     }
 
